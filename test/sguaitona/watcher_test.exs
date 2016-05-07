@@ -3,12 +3,13 @@ defmodule Sguaitona.WatherTest do
   alias Sguaitona.Watcher
 
   setup_all do
+    :ok = Application.stop(:sguaitona)
     {:ok, _} = :net_kernel.start([:test, :shortnames])
     :ok
   end
 
   setup do
-    Watcher.clear
+    Watcher.start_link()
     :ok
   end
 
