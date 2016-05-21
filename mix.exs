@@ -14,7 +14,7 @@ defmodule Sguaitona.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger],
+    [applications: [:logger, :porcelain],
      mod: {Sguaitona.Application, []}]
   end
 
@@ -29,7 +29,8 @@ defmodule Sguaitona.Mixfile do
   # Type "mix help deps" for more examples and options
   defp deps do
     [
-      {:credo, "~> 0.3", only: [:dev, :test]}
+      {:credo, "~> 0.3", only: [:dev, :test]},
+      {:porcelain, "~> 2.0"},
     ]
   end
 end

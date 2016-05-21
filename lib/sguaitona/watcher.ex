@@ -31,6 +31,10 @@ defmodule Sguaitona.Watcher do
     GenServer.call(:watcher, {:nodes})
   end
 
+  def register_for_events(pid \\ self) do
+
+  end
+
   @doc """
   Executed when receive message to add node to cluster.
   """
