@@ -1,5 +1,4 @@
 # Sguaitona
-===
 
 [![Build status](https://travis-ci.org/gpad/sguaitona.svg "Build status")](https://travis-ci.org/alco/porcelain)
 

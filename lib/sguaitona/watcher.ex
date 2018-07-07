@@ -4,7 +4,7 @@ defmodule Sguaitona.Watcher do
   def start_link(nodes \\ []) do
     GenServer.start_link(
       __MODULE__,
-      MapSet.new(concat_if(net_kernel_running?, nodes)),
+      MapSet.new(concat_if(net_kernel_running?(), nodes)),
       name: :watcher
     )
   end
@@ -35,25 +35,25 @@ defmodule Sguaitona.Watcher do
     GenServer.call(:watcher, {:nodes})
   end
 
-  def register_for_events(pid \\ self) do
+  def register_for_events(_pid \\ self()) do
   end
 
   @doc """
   Executed when receive message to add node to cluster.
   """
-  def handle_call({:add_node, node_to_add}, from, nodes) do
+  def handle_call({:add_node, node_to_add}, _from, nodes) do
     {:reply, Node.connect(node_to_add), MapSet.put(nodes, node_to_add)}
   end
 
   @doc """
   Return the list of nodes in the cluster.
   """
-  def handle_call({:nodes}, from, nodes) do
+  def handle_call({:nodes}, _from, nodes) do
     {:reply, MapSet.to_list(nodes), nodes}
   end
 
-  def handle_call({:clear}, from, _) do
-    {:reply, :ok, MapSet.new(only_me)}
+  def handle_call({:clear}, _from, _) do
+    {:reply, :ok, MapSet.new(only_me())}
   end
 
   @doc """
@@ -61,7 +61,7 @@ defmodule Sguaitona.Watcher do
   """
   def handle_info({:nodedown, node_to_poll}, nodes) do
     Sguaitona.Poller.try_to_connect(node_to_poll, fn ->
-      Sguaitona.Watcher.add_node(:watcher, node_to_poll)
+      Sguaitona.Watcher.add_node(node_to_poll)
     end)
 
     {:noreply, nodes}
@@ -87,7 +87,7 @@ defmodule Sguaitona.Watcher do
   end
 
   defp concat_if(false, _), do: []
-  defp concat_if(true, nodes), do: [node | nodes]
+  defp concat_if(true, nodes), do: [node() | nodes]
 
-  def only_me(), do: concat_if(net_kernel_running?, [])
+  def only_me(), do: concat_if(net_kernel_running?(), [])
 end
