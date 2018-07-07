@@ -1,4 +1,7 @@
 defmodule Sguaitona.Poller do
+  @moduledoc """
+  Module to try the poller.
+  """
   def try_to_connect(node_to_poll, callback) do
     if Node.connect(node_to_poll) do
       IO.puts("Connected to #{node_to_poll}")

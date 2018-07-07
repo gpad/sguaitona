@@ -1,5 +1,10 @@
 defmodule Sguaitona.Watcher do
+  @moduledoc """
+  Module to wathc the other nodes of the cluster.
+  """
   use GenServer
+  alias Sguaitona.Poller
+  alias Sguaitona.Watcher
 
   def start_link(nodes \\ []) do
     GenServer.start_link(
@@ -60,8 +65,8 @@ defmodule Sguaitona.Watcher do
   Executed when one node of the cluster go disconnected.
   """
   def handle_info({:nodedown, node_to_poll}, nodes) do
-    Sguaitona.Poller.try_to_connect(node_to_poll, fn ->
-      Sguaitona.Watcher.add_node(node_to_poll)
+    Poller.try_to_connect(node_to_poll, fn ->
+      Watcher.add_node(node_to_poll)
     end)
 
     {:noreply, nodes}

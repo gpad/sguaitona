@@ -1,4 +1,7 @@
 defmodule Sguaitona.Application do
+  @moduledoc """
+  Module fo the application.
+  """
   use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html

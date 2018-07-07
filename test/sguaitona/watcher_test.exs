@@ -25,16 +25,16 @@ defmodule Sguaitona.WatherTest do
   end
 
   test "when started contains actual node" do
-    assert Watcher.nodes() == [node]
+    assert Watcher.nodes() == [node()]
   end
 
   test "don't duplicate current node" do
-    Watcher.add_node(node)
-    assert Watcher.nodes() == [node]
+    Watcher.add_node(node())
+    assert Watcher.nodes() == [node()]
   end
 
   test "return all nodes also if not connected" do
-    nodes = [node, :t2@localhost, :t1@localhost]
+    nodes = [node(), :t2@localhost, :t1@localhost]
 
     nodes |> Enum.each(&Watcher.add_node/1)
     assert Watcher.nodes() == Enum.sort(nodes)
@@ -43,7 +43,6 @@ defmodule Sguaitona.WatherTest do
   test "when node goes down raise event" do
     {process, node_name} = start_node(:another_node)
     Watcher.add_node(node_name)
-    IO.inspect(Watcher.nodes())
     Watcher.register_for_events()
 
     stop_node(process)

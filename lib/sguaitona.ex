@@ -2,13 +2,14 @@ defmodule Sguaitona do
   @moduledoc """
   Documentation for Sguaitona.
   """
+  alias Sguaitona.Watcher
 
   def add_node(node_to_add) do
-    Sguaitona.Watcher.add_node(node_to_add)
+    Watcher.add_node(node_to_add)
   end
 
   def nodes() do
-    Sguaitona.Watcher.nodes()
+    Watcher.nodes()
   end
 end
 
