@@ -7,6 +7,7 @@ mix local.rebar --force # for Elixir 1.3.0 and up
 mix local.hex --force
 mix deps.get
 
+mix compile --warnings-as-errors
 mix format --check-formatted
 mix credo --strict
 mix test
