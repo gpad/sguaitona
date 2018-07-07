@@ -15,7 +15,7 @@ defmodule Sguaitona.WatherTest do
 
   defp start_node(name) do
     {
-      Porcelain.spawn("iex", ["--sname", name], [in: :receive, out: :stream]),
+      Porcelain.spawn("iex", ["--sname", name], in: :receive, out: :stream),
       name
     }
   end
@@ -37,18 +37,17 @@ defmodule Sguaitona.WatherTest do
     nodes = [node, :t2@localhost, :t1@localhost]
 
     nodes |> Enum.each(&Watcher.add_node/1)
-    assert Watcher.nodes() == Enum.sort nodes
+    assert Watcher.nodes() == Enum.sort(nodes)
   end
 
   test "when node goes down raise event" do
     {process, node_name} = start_node(:another_node)
     Watcher.add_node(node_name)
-    IO.inspect Watcher.nodes()
+    IO.inspect(Watcher.nodes())
     Watcher.register_for_events()
 
     stop_node(process)
 
     assert_receive({:node_added, _})
   end
-
 end

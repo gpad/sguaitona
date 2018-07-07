@@ -1,4 +1,7 @@
 defmodule Sguaitona do
+  @moduledoc """
+  Documentation for Sguaitona.
+  """
 
   def add_node(node_to_add) do
     Sguaitona.Watcher.add_node(:watcher, node_to_add)
@@ -7,9 +10,7 @@ defmodule Sguaitona do
   def nodes() do
     Sguaitona.Watcher.nodes(:watcher)
   end
-
 end
-
 
 ##
 # net_kernel:monitor_nodes(true).

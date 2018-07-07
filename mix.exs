@@ -1,36 +1,26 @@
-defmodule Sguaitona.Mixfile do
+defmodule Sguaitona.MixProject do
   use Mix.Project
 
   def project do
-    [app: :sguaitona,
-     version: "0.0.1",
-     elixir: "~> 1.2",
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps]
+    [
+      app: :sguaitona,
+      version: "0.1.0",
+      elixir: "~> 1.6",
+      start_permanent: Mix.env() == :prod,
+      deps: deps()
+    ]
   end
 
-  # Configuration for the OTP application
-  #
-  # Type "mix help compile.app" for more information
+  # Run "mix help compile.app" to learn about applications.
   def application do
-    [applications: [:logger, :porcelain],
-     mod: {Sguaitona.Application, []}]
+    [applications: [:logger, :porcelain], mod: {Sguaitona.Application, []}]
   end
 
-  # Dependencies can be Hex packages:
-  #
-  #   {:mydep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
-  #
-  # Type "mix help deps" for more examples and options
+  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:credo, "~> 0.3", only: [:dev, :test]},
-      {:porcelain, "~> 2.0"},
+      {:credo, "~> 0.9", only: [:dev, :test], runtime: false},
+      {:porcelain, "~> 2.0"}
     ]
   end
 end

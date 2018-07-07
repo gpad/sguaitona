@@ -2,7 +2,11 @@ defmodule Sguaitona.Watcher do
   use GenServer
 
   def start_link(nodes \\ []) do
-    GenServer.start_link(__MODULE__, MapSet.new(concat_if(net_kernel_running?, nodes)), [name: :watcher])
+    GenServer.start_link(
+      __MODULE__,
+      MapSet.new(concat_if(net_kernel_running?, nodes)),
+      name: :watcher
+    )
   end
 
   def init(nodes) do
@@ -32,7 +36,6 @@ defmodule Sguaitona.Watcher do
   end
 
   def register_for_events(pid \\ self) do
-
   end
 
   @doc """
@@ -57,7 +60,10 @@ defmodule Sguaitona.Watcher do
   Executed when one node of the cluster go disconnected.
   """
   def handle_info({:nodedown, node_to_poll}, nodes) do
-    Sguaitona.Poller.try_to_connect(node_to_poll, fn -> Sguaitona.Watcher.add_node(:watcher, node_to_poll) end)
+    Sguaitona.Poller.try_to_connect(node_to_poll, fn ->
+      Sguaitona.Watcher.add_node(:watcher, node_to_poll)
+    end)
+
     {:noreply, nodes}
   end
 
@@ -72,7 +78,7 @@ defmodule Sguaitona.Watcher do
   Simply log the unknown message.
   """
   def handle_info(msg, state) do
-    IO.puts "handle info #{inspect msg} - #{inspect state}"
+    IO.puts("handle info #{inspect(msg)} - #{inspect(state)}")
     {:noreply, state}
   end
 

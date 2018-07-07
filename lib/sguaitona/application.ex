@@ -8,7 +8,7 @@ defmodule Sguaitona.Application do
 
     children = [
       # Define workers and child supervisors to be supervised
-      worker(Sguaitona.Watcher, []),
+      worker(Sguaitona.Watcher, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -17,7 +17,6 @@ defmodule Sguaitona.Application do
     Supervisor.start_link(children, opts)
   end
 end
-
 
 ##
 # net_kernel:monitor_nodes(true).
